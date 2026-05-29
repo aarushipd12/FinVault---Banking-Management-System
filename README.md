@@ -72,9 +72,12 @@ FLUSH PRIVILEGES;
 
 Create a file named `.env` and add:
 
-DB_HOST=localhost\n
-DB_USER=root\n
-DB_PASSWORD={yourpassword}\n
+DB_HOST=localhost
+
+DB_USER=root
+
+DB_PASSWORD={yourpassword}
+
 DB_NAME=bank_db
 
 **6. Run the application:**
