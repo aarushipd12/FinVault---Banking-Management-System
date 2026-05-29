@@ -22,24 +22,43 @@ FinVault is a command-line banking management system built with Python and MySQL
 ## Architecture
 FinVault/
 ├── app.py                  # Flask REST API — all backend routes
+
 ├── bank.py                 # Core banking engine (OOP)
+
 ├── customer.py             # Customer entity with encapsulation
+
 ├── database.py             # MySQL connection and query abstraction
+
 ├── register.py             # Authentication logic
+
 ├── main.py                 # CLI driver (original CLI version)
+
 ├── .env                    # Environment variables (not pushed)
+
 ├── .gitignore
+
 ├── README.md
+
 └── finvault-frontend/      # React frontend
+
 ├── public/
+
 ├── src/
+
 │   ├── assets/         # Static assets
+
 │   ├── App.jsx         # Root component with routing
+
 │   ├── App.css         # Global styles
+
 │   ├── index.css       # Base styles
+
 │   └── main.jsx        # React entry point
+
 ├── index.html
+
 ├── package.json
+
 └── vite.config.js
 
 ## Features
