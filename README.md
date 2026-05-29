@@ -38,8 +38,8 @@ The project follows a modular OOP architecture with separation of concerns acros
 ## Setup Instructions
 
 ### Prerequisites
-- Python 3.x installed — [Download here](https://www.python.org/downloads/)
-- MySQL 8.0 installed — [Download here](https://dev.mysql.com/downloads/installer/)
+- Python 3.x installed
+- MySQL 8.0 installed
 - VS Code or any IDE
 
 ### Installation
