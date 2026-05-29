@@ -9,10 +9,10 @@ from pathlib import Path
 load_dotenv()
 
 mydb = sql.connect(
-    host="localhost",
-    user="root",
-    passwd="Aa@22072014",
-    database="bank_db"
+    host=os.getenv("DB_HOST"),
+    user=os.getenv("DB_USER"),
+    passwd=os.getenv("DB_PASSWORD"),
+    database=os.getenv("DB_NAME")
 )
 
 mycursor = mydb.cursor()
