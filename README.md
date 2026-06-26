@@ -1,4 +1,4 @@
-# FinVault — CLI-Based Banking Management System
+# FinVault — CLI and Fullstack based Banking Management System
 
 FinVault is a command-line banking management system built with Python and MySQL, implementing core banking operations through a structured object-oriented architecture. The system provides secure user authentication, real-time transaction processing, and persistent data management via a relational database backend.
 
