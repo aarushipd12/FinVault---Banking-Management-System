@@ -1,13 +1,266 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>finvault-frontend</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
-  </body>
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>FinVault — Core Banking Portal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <!-- Background dial ornament (decorative, aria-hidden) -->
+  <div class="bg-dial" aria-hidden="true"></div>
+
+  <!-- Toast / message -->
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <!-- ============ AUTH: CHOICE SCREEN ============ -->
+  <main id="view-choice" class="view view-auth">
+    <div class="auth-card auth-card--choice">
+      <div class="vault-dial" aria-hidden="true">
+        <div class="vault-dial__ring"></div>
+        <div class="vault-dial__ring vault-dial__ring--inner"></div>
+        <div class="vault-dial__notch"></div>
+        <div class="vault-dial__center">FV</div>
+      </div>
+      <p class="eyebrow">Core Banking Portal</p>
+      <h1 class="brand-title">FinVault</h1>
+      <p class="auth-sub">Your ledger, locked and loaded.</p>
+
+      <div class="choice-actions">
+        <button class="btn btn--primary" data-nav="signup" type="button">
+          <span class="btn__label">Open an account</span>
+          <span class="btn__meta">New customer sign up</span>
+        </button>
+        <button class="btn btn--secondary" data-nav="signin" type="button">
+          <span class="btn__label">Access my vault</span>
+          <span class="btn__meta">Existing customer sign in</span>
+        </button>
+      </div>
+    </div>
+  </main>
+
+  <!-- ============ AUTH: SIGN UP ============ -->
+  <main id="view-signup" class="view view-auth hidden">
+    <div class="auth-card">
+      <button class="back-link" data-nav="choice" type="button">&larr; Back</button>
+      <p class="eyebrow">Step 1 of 1</p>
+      <h2 class="form-title">Open an account</h2>
+      <p class="auth-sub">Every field below becomes part of your permanent vault record.</p>
+
+      <form id="form-signup" novalidate>
+        <label class="field">
+          <span class="field__label">Username</span>
+          <input type="text" name="username" required minlength="3" autocomplete="username" placeholder="e.g. aarushi_p" />
+        </label>
+        <label class="field">
+          <span class="field__label">Password</span>
+          <input type="password" name="password" required minlength="6" autocomplete="new-password" placeholder="At least 6 characters" />
+        </label>
+        <label class="field">
+          <span class="field__label">Full name</span>
+          <input type="text" name="name" required placeholder="e.g. Aarushi Pandey" />
+        </label>
+        <div class="field-row">
+          <label class="field">
+            <span class="field__label">Age</span>
+            <input type="number" name="age" required min="18" max="120" placeholder="21" />
+          </label>
+          <label class="field">
+            <span class="field__label">City</span>
+            <input type="text" name="city" required placeholder="Indore" />
+          </label>
+        </div>
+        <button class="btn btn--primary btn--block" type="submit">
+          <span class="btn__label">Create my vault</span>
+        </button>
+      </form>
+    </div>
+  </main>
+
+  <!-- ============ AUTH: SIGN IN ============ -->
+  <main id="view-signin" class="view view-auth hidden">
+    <div class="auth-card">
+      <button class="back-link" data-nav="choice" type="button">&larr; Back</button>
+      <p class="eyebrow">Welcome back</p>
+      <h2 class="form-title">Access my vault</h2>
+      <p class="auth-sub">Enter your credentials to unlock the dial.</p>
+
+      <form id="form-signin" novalidate>
+        <label class="field">
+          <span class="field__label">Username</span>
+          <input type="text" name="username" required autocomplete="username" placeholder="Your username" />
+        </label>
+        <label class="field">
+          <span class="field__label">Password</span>
+          <input type="password" name="password" required autocomplete="current-password" placeholder="Your password" />
+        </label>
+        <button class="btn btn--primary btn--block" type="submit">
+          <span class="btn__label">Unlock vault</span>
+        </button>
+      </form>
+    </div>
+  </main>
+
+  <!-- ============ DASHBOARD ============ -->
+  <main id="view-dashboard" class="view view-dashboard hidden">
+    <div class="shell">
+
+      <!-- Sidebar -->
+      <aside class="sidebar">
+        <div class="sidebar__brand">
+          <div class="vault-dial vault-dial--sm" aria-hidden="true">
+            <div class="vault-dial__ring"></div>
+            <div class="vault-dial__notch"></div>
+            <div class="vault-dial__center">FV</div>
+          </div>
+          <span class="sidebar__brand-name">FinVault</span>
+        </div>
+
+        <nav class="dial-nav" id="dial-nav" aria-label="Banking services">
+          <button class="dial-nav__item is-active" data-tab="balance" type="button">
+            <span class="dial-nav__index">01</span> Balance
+          </button>
+          <button class="dial-nav__item" data-tab="deposit" type="button">
+            <span class="dial-nav__index">02</span> Deposit
+          </button>
+          <button class="dial-nav__item" data-tab="withdraw" type="button">
+            <span class="dial-nav__index">03</span> Withdraw
+          </button>
+          <button class="dial-nav__item" data-tab="transfer" type="button">
+            <span class="dial-nav__index">04</span> Transfer
+          </button>
+          <button class="dial-nav__item" data-tab="history" type="button">
+            <span class="dial-nav__index">05</span> History
+          </button>
+          <button class="dial-nav__item" data-tab="profile" type="button">
+            <span class="dial-nav__index">06</span> Profile
+          </button>
+          <button class="dial-nav__item" data-tab="settings" type="button">
+            <span class="dial-nav__index">07</span> Security
+          </button>
+        </nav>
+
+        <button class="signout-btn" id="btn-signout" type="button">
+          <span class="dial-nav__index">08</span> Sign out
+        </button>
+      </aside>
+
+      <!-- Main -->
+      <section class="main-panel">
+        <header class="topbar">
+          <div>
+            <p class="topbar__greeting">Welcome back, <span id="topbar-username">—</span></p>
+            <p class="topbar__meta">Account No. <span id="topbar-account" class="mono">—</span></p>
+          </div>
+          <button class="icon-btn" id="btn-refresh" title="Refresh balance" type="button" aria-label="Refresh balance">&#8635;</button>
+        </header>
+
+        <div class="balance-plate">
+          <p class="balance-plate__label">Available balance</p>
+          <p class="balance-plate__value"><span class="balance-plate__currency">&#8377;</span><span id="balance-amount">0</span></p>
+        </div>
+
+        <!-- Panels -->
+        <div class="panel" id="panel-balance">
+          <h3 class="panel__title">Balance enquiry</h3>
+          <p class="panel__body">Your vault's liquid balance is refreshed live from the ledger. Use the dial icon above to pull the latest figure at any time.</p>
+        </div>
+
+        <div class="panel hidden" id="panel-deposit">
+          <h3 class="panel__title">Deposit funds</h3>
+          <form id="form-deposit" class="inline-form" novalidate>
+            <label class="field">
+              <span class="field__label">Amount (&#8377;)</span>
+              <input type="number" name="amount" min="1" required placeholder="0" />
+            </label>
+            <button class="btn btn--positive" type="submit"><span class="btn__label">Deposit</span></button>
+          </form>
+        </div>
+
+        <div class="panel hidden" id="panel-withdraw">
+          <h3 class="panel__title">Withdraw funds</h3>
+          <form id="form-withdraw" class="inline-form" novalidate>
+            <label class="field">
+              <span class="field__label">Amount (&#8377;)</span>
+              <input type="number" name="amount" min="1" required placeholder="0" />
+            </label>
+            <button class="btn btn--negative" type="submit"><span class="btn__label">Withdraw</span></button>
+          </form>
+        </div>
+
+        <div class="panel hidden" id="panel-transfer">
+          <h3 class="panel__title">Transfer funds</h3>
+          <form id="form-transfer" class="stack-form" novalidate>
+            <label class="field">
+              <span class="field__label">Receiver's account number</span>
+              <input type="number" name="receiver" required placeholder="8-digit account number" />
+            </label>
+            <label class="field">
+              <span class="field__label">Amount (&#8377;)</span>
+              <input type="number" name="amount" min="1" required placeholder="0" />
+            </label>
+            <button class="btn btn--primary" type="submit"><span class="btn__label">Send transfer</span></button>
+          </form>
+        </div>
+
+        <div class="panel hidden" id="panel-history">
+          <h3 class="panel__title">Transaction history</h3>
+          <div id="history-empty" class="empty-state hidden">
+            <p>No transactions recorded yet. Your ledger entries will appear here.</p>
+          </div>
+          <div class="table-wrap">
+            <table class="ledger-table" id="history-table">
+              <thead>
+                <tr>
+                  <th>Timestamp</th>
+                  <th>Account</th>
+                  <th>Remarks</th>
+                  <th>Amount</th>
+                </tr>
+              </thead>
+              <tbody id="history-body"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="panel hidden" id="panel-profile">
+          <h3 class="panel__title">My profile</h3>
+          <dl class="profile-grid">
+            <div class="profile-grid__item"><dt>Account holder</dt><dd id="profile-name">—</dd></div>
+            <div class="profile-grid__item"><dt>Username</dt><dd id="profile-username" class="mono">—</dd></div>
+            <div class="profile-grid__item"><dt>Age</dt><dd id="profile-age">—</dd></div>
+            <div class="profile-grid__item"><dt>City</dt><dd id="profile-city">—</dd></div>
+            <div class="profile-grid__item"><dt>Account number</dt><dd id="profile-account" class="mono">—</dd></div>
+          </dl>
+        </div>
+
+        <div class="panel hidden" id="panel-settings">
+          <h3 class="panel__title">Reset password</h3>
+          <form id="form-settings" class="stack-form" novalidate>
+            <label class="field">
+              <span class="field__label">Current password</span>
+              <input type="password" name="old" required autocomplete="current-password" />
+            </label>
+            <label class="field">
+              <span class="field__label">New password</span>
+              <input type="password" name="new" required minlength="6" autocomplete="new-password" />
+            </label>
+            <label class="field">
+              <span class="field__label">Confirm new password</span>
+              <input type="password" name="confirm" required minlength="6" autocomplete="new-password" />
+            </label>
+            <button class="btn btn--primary" type="submit"><span class="btn__label">Update credentials</span></button>
+          </form>
+        </div>
+
+      </section>
+    </div>
+  </main>
+
+  <script src="js/script.js"></script>
+</body>
 </html>

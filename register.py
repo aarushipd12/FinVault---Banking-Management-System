@@ -39,7 +39,7 @@ def SignIn():
         while True:
             password = input(f"Welcome {username} Enter Your Password: ")
             temp = db_query(f"SELECT password FROM customers WHERE username = '{username}';")
-            if temp[0][0] == password:
+            if Customer.verify_password(password, temp[0][0]):
                 print("Successfully Signed In!\n")
                 return username
             else:

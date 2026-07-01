@@ -87,11 +87,12 @@ while status:
                 while True:
                     old_password = input("Enter your current password: ")
                     temp = db_query(f"SELECT password FROM customers WHERE username = '{user}'")
-                    if temp[0][0] == old_password:
+                    if Customer.verify_password(old_password, temp[0][0]):
                         new_password = input("Enter new password: ")
                         confirm_password = input("Confirm new password: ")
                         if new_password == confirm_password:
-                            db_query(f"UPDATE customers SET password = '{new_password}' WHERE username = '{user}'")
+                            new_hash = Customer.hash_password(new_password)
+                            db_query(f"UPDATE customers SET password = '{new_hash}' WHERE username = '{user}'")
                             mydb.commit()
                             print("Password reset successfully!")
                             break

@@ -15,9 +15,8 @@ CORS(app)
 def home():
     return "FinVault API is running!"
 
-# ==========================================
-# FLOW GATE 1: CUSTOMER SIGNUP
-# ==========================================
+# FLOW GATE 1: CUSTOMER SIGNUP 
+
 @app.route('/api/signup', methods=['POST'])
 def api_signup():
     data = request.json
@@ -27,7 +26,6 @@ def api_signup():
     age = data.get('age')
     city = data.get('city')
     
-    # Mirroring your register.py SignUp uniqueness validation logic
     temp = db_query(f"SELECT username FROM customers where username = '{username}';")
     if temp:
         return jsonify({"success": False, "message": "Username Already Exists"}), 400
@@ -40,11 +38,9 @@ def api_signup():
             break
             
     try:
-        # Initiating your exact custom Customer class constructor layout
         customer_obj = Customer(username, password, name, age, city, account_number)
         customer_obj.createUser()
         
-        # Spawning user dedicated transaction metrics tables
         bank_obj = Bank(username, account_number)
         bank_obj.create_transaction_table()
         
@@ -52,9 +48,8 @@ def api_signup():
     except Exception as e:
         return jsonify({"success": False, "message": str(e)}), 500
 
-# ==========================================
 # FLOW GATE 2: SIGNIN INTERCEPTOR
-# ==========================================
+
 @app.route('/api/login', methods=['POST'])
 def api_login():
     data = request.json
@@ -67,7 +62,8 @@ def api_login():
         return jsonify({"success": False, "message": "Username does not exist."}), 404
         
     password_check = db_query(f"SELECT password FROM customers WHERE username = '{username}';")
-    if password_check[0][0] == password:
+    stored_hash = password_check[0][0]
+    if Customer.verify_password(password, stored_hash):
         return jsonify({
             "success": True,
             "username": username,
@@ -76,9 +72,7 @@ def api_login():
     else:
         return jsonify({"success": False, "message": "Wrong password. Please retry!"}), 401
 
-# ==========================================
 # BANKING OPERATIONAL CORE (SERVICES 1 - 7)
-# ==========================================
 
 @app.route('/api/balance', methods=['POST'])
 def api_balance():
@@ -184,8 +178,9 @@ def api_reset_password():
     
     try:
         temp = db_query(f"SELECT password FROM customers WHERE username = '{username}'")
-        if temp and temp[0][0] == old_password:
-            db_query(f"UPDATE customers SET password = '{new_password}' WHERE username = '{username}'")
+        if temp and Customer.verify_password(old_password, temp[0][0]):
+            new_hash = Customer.hash_password(new_password)
+            db_query(f"UPDATE customers SET password = '{new_hash}' WHERE username = '{username}'")
             mydb.commit()
             return jsonify({"success": True, "message": "Password updated successfully!"}), 200
         return jsonify({"success": False, "message": "Wrong current password. Try again!"}), 200
