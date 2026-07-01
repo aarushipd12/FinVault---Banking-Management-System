@@ -19,6 +19,7 @@ FinVault is a full-stack banking management system built with Python, Flask, MyS
 - **Design:** custom "vault dial" visual identity — Fraunces (display serif) + IBM Plex Sans/Mono, dark ink-navy palette with brass, teal, and clay accents
 
 > The frontend was deliberately rewritten from React/Vite to a dependency-free static site — open `index.html` directly or serve it with any static file server, with zero `npm install` required.
+<img width="1917" height="966" alt="image" src="https://github.com/user-attachments/assets/8fc05be7-9357-483f-896b-7a715d5ca0cc" />
 
 ---
 
