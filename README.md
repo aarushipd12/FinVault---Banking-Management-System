@@ -5,7 +5,7 @@ FinVault is a full-stack banking management system built with Python, Flask, MyS
 ## Tech Stack
 
 ### Backend
-- **Language:** Python 3.x
+- **Language:** Python 
 - **Framework:** Flask (REST API)
 - **Database:** MySQL 8.0
 - **Connector:** mysql-connector-python
