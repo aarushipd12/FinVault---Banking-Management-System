@@ -173,7 +173,7 @@ Open **`http://localhost:8080`** in your browser.
 
 ## CLI Version
 
-The original CLI version is still available and fully functional, now also using bcrypt:
+The original CLI version is still available and fully functional:
 ```bash
 python main.py
 ```
